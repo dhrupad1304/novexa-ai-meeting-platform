@@ -1,169 +1,249 @@
-# Novexa — AI-Powered Meeting Intelligence Platform
+# Novexa – AI-Powered Meeting Platform
 
-Novexa is a team collaboration and meeting platform that combines live meetings, speech transcription, and AI-assisted meeting intelligence. The project integrates IBM Watson Speech to Text for speech recognition and IBM watsonx / Granite models for language-model-powered meeting workflows.
+An AI-powered meeting and collaboration platform designed to make meetings more productive through intelligent voice processing, AI assistance, and team collaboration.
 
-> **Project context:** Developed as a five-member team project. This repository is maintained as a personal portfolio copy with permission from the project contributors. See [Team and attribution](#team-and-attribution).
+<p align="center">
+  <a href="https://novexa-cyan.vercel.app/"><strong>🚀 Visit Live Application</strong></a>
+  &nbsp; | &nbsp;
+  <a href="https://youtu.be/zdVjuxpx4rE"><strong>▶ Watch Project Demo</strong></a>
+  &nbsp; | &nbsp;
+  <a href="https://github.com/dhrupad1304/novexa-ai-meeting-platform"><strong>GitHub Repository</strong></a>
+</p>
 
-![Novexa brand mark](public/novexa2.png)
+---
 
-## Highlights
+## 🌐 Live Application
 
-- **Meeting collaboration:** meeting creation/joining and collaboration flows.
-- **Speech recognition (ASR):** IBM Watson Speech to Text integration for live meeting transcription.
-- **Audio capture and processing:** browser microphone stream, Web Audio API, `AudioWorkletNode`, and Float32-to-Int16 PCM conversion.
-- **Live transcription events:** interim and final transcript handling, with confidence/timing data where returned by the service.
-- **AI meeting intelligence:** IBM watsonx API integration using Granite models for meeting summaries and related language-model workflows.
-- **Team productivity:** chat, goals, check-ins, and team-management modules are present in the application.
+**Try Novexa:** https://novexa-cyan.vercel.app/
 
-## Speech-to-text pipeline
+## 🎥 Project Demonstration
 
-The real-time ASR path is implemented across `src/lib/watsonSTT.js`, `public/audio-processor.js`, and `src/app/api/watson-stt/route.js`:
+Watch the project demonstration to understand the platform and its functionality.
 
-1. The meeting audio stream is passed to a browser `AudioContext` (configured with a preferred 16 kHz sample rate).
-2. An `AudioWorkletNode` loads `public/audio-processor.js` and reads microphone samples.
-3. The worklet converts Float32 samples to signed 16-bit PCM chunks and posts the chunk buffers to the main thread.
-4. The client obtains a short-lived Watson STT token from the server route and opens a WebSocket connection to IBM Watson Speech to Text.
-5. Audio chunks are sent over the WebSocket. The client handles interim and final recognition results and forwards transcript data to the application.
+<p align="center">
+  <a href="https://youtu.be/zdVjuxpx4rE">
+    <img src="https://img.youtube.com/vi/zdVjuxpx4rE/hqdefault.jpg" alt="Novexa AI Meeting Platform Demo" width="700">
+  </a>
+</p>
 
-The recognition configuration requests linear PCM audio (`audio/l16`, 16 kHz, mono), interim results, timestamps, and word confidence. Actual capture sample rate can depend on browser/device support; verify the runtime audio context when testing on a new device.
+<p align="center">
+  <a href="https://youtu.be/zdVjuxpx4rE">Watch the Full Demo on YouTube</a>
+</p>
 
-## AI meeting intelligence
+---
 
-The server-side watsonx integration is implemented in `src/lib/watsonx.js` and the meeting/agent API routes. The application obtains an IBM IAM access token using the configured API key, then calls the configured watsonx inference endpoint. The configured model defaults to `ibm/granite-3-3-8b-instruct` and can be overridden through environment variables.
+## 📌 Overview
 
-The application uses model responses in meeting summary, auto-summary, meeting chat, and agent-related workflows. Provider credentials remain server-side and must be supplied through environment variables.
+Novexa is an AI-powered meeting platform developed to improve how teams communicate, collaborate, and manage meetings.
 
-## Architecture
+The platform combines web technologies with IBM watsonx and IBM Watson Speech services to support AI-powered interactions and voice-based functionality.
+
+It brings together speech recognition, AI language model integration, audio processing, and collaborative meeting experiences in a unified application.
+
+Novexa was developed as a collaborative project by a team of five members and was recognized among the **Top 50 Worldwide at IBM TechXchange 2025**.
+
+## ✨ Key Features
+
+- **AI-Powered Meeting Assistance:** Integrates IBM watsonx and Granite LLM capabilities for intelligent AI interactions.
+- **Speech-to-Text:** Uses IBM Watson Speech-to-Text to convert voice input into text.
+- **Text-to-Speech:** Integrates IBM Watson Text-to-Speech for voice-based responses.
+- **Audio Processing:** Captures and processes microphone input through browser audio APIs.
+- **Real-Time Audio Streaming:** Uses WebSocket-based communication for speech processing.
+- **AI Integration:** Connects application workflows with IBM AI services through API integrations.
+- **Collaborative Experience:** Provides a platform for meeting-related interactions and team collaboration.
+
+## 🏗️ System Architecture
+
+The application connects its frontend, API routes, audio-processing components, and IBM AI services.
 
 ```mermaid
 flowchart TD
-    A[Browser meeting UI] --> B[Microphone / meeting audio stream]
-    B --> C[Web Audio API AudioContext]
-    C --> D[AudioWorkletNode]
-    D --> E[Float32 to signed 16-bit PCM chunks]
-    E --> F[Watson STT WebSocket]
-    G[Next.js API: /api/watson-stt] --> H[IBM STT token service]
-    H --> F
-    F --> I[Interim / final transcript events]
-    I --> J[Meeting transcript UI and storage flows]
-    J --> K[Next.js meeting / agent API routes]
-    K --> L[watsonx integration]
-    L --> M[IBM Granite model]
-    M --> N[AI-generated meeting insights / summaries]
-    O[Next.js application] <--> P[(MongoDB)]
+    A[User / Meeting Participant] --> B[Next.js Frontend]
+    B --> C[Meeting Interface]
+    B --> D[Audio Capture]
+    D --> E[Audio Processing]
+    E --> F[IBM Watson Speech-to-Text]
+    F --> G[Transcribed Text]
+    G --> H[IBM watsonx API]
+    H --> I[Granite LLM]
+    I --> J[AI Response]
+    J --> B
+    B --> K[Backend API Routes]
+    K --> L[Application Services]
+    L --> M[(MongoDB)]
+    B --> N[IBM Watson Text-to-Speech]
 ```
 
-This diagram describes the main speech and AI integration path. Other collaboration modules and meeting transports are also present in the codebase.
+## 🧠 AI and Voice Processing Pipeline
 
-## Technology stack
+The AI and voice integration consists of the following stages:
 
-| Area | Technologies found in the project |
+1. **Audio Capture:** Captures microphone input using browser audio APIs.
+2. **Audio Processing:** Uses an AudioWorklet to process audio samples and convert floating-point audio data into 16-bit PCM format.
+3. **Speech Recognition:** Streams audio to IBM Watson Speech-to-Text through a WebSocket connection.
+4. **Transcription:** Receives recognized speech and makes the transcribed text available to the application.
+5. **AI Inference:** Integrates with IBM watsonx to generate AI responses using the Granite language model.
+6. **Voice Response:** Uses IBM Watson Text-to-Speech to convert text responses into audio.
+
+## 🛠️ Technology Stack
+
+| Category | Technologies |
 |---|---|
-| Web application | Next.js 15, React 19, JavaScript |
-| UI | Chakra UI, Tailwind CSS, Framer Motion, Lucide React |
-| Speech / audio | IBM Watson Speech to Text, WebSocket, Web Audio API, AudioWorklet |
-| Generative AI | IBM watsonx, IBM Granite |
-| Data | MongoDB, Mongoose |
-| Meetings / realtime | Agora SDK, Socket.IO, WebRTC-related modules |
-| Media / uploads | Cloudinary |
+| Frontend | Next.js, React, JavaScript |
+| Backend | Next.js API Routes, Node.js |
+| Database | MongoDB |
+| AI / LLM | IBM watsonx, IBM Granite |
+| Speech Recognition | IBM Watson Speech-to-Text |
+| Speech Synthesis | IBM Watson Text-to-Speech |
 | Authentication | NextAuth |
+| Real-Time Communication | WebSockets, Agora, Socket.IO |
+| Media Storage | Cloudinary |
+| Deployment | Vercel |
+| Development Tools | Git, GitHub, VS Code |
 
-## Repository structure
+## 📂 Project Structure
 
 ```text
-.
+novexa-ai-meeting-platform/
+│
 ├── public/
-│   ├── audio-processor.js       # AudioWorklet: Float32 -> Int16 PCM chunks
-│   └── novexa2.png              # Novexa brand asset
+│   └── audio-processor.js
+│
 ├── src/
-│   ├── app/api/                 # Next.js API routes (STT, TTS, watsonx, meetings, etc.)
-│   ├── components/              # Meeting and collaboration UI
-│   ├── hooks/                   # Meeting, audio and transcription hooks
+│   ├── app/
+│   │   └── api/
+│   │       ├── watson-stt/
+│   │       └── tts/
+│   │
 │   └── lib/
-│       ├── watsonSTT.js         # Watson STT token + WebSocket client
-│       ├── watsonx.js           # watsonx IAM token + inference helper
-│       └── mongodb.js           # MongoDB connection helper
-├── server.js                    # Custom Next.js / Socket.IO server
-├── .env.example                 # Safe environment-variable template
-├── ARCHITECTURE.md              # Architecture and ASR flow notes
+│       ├── watsonSTT.js
+│       └── watsonx.js
+│
+├── screenshots/
+│
+├── ARCHITECTURE.md
+├── DEPLOYMENT.md
+├── .env.example
+├── .gitignore
+├── package.json
 └── README.md
 ```
 
-## Getting started
+*Note: This is a simplified representation showing selected project files and directories.*
+
+## ⚙️ Getting Started
+
+Follow these instructions to run the project locally.
 
 ### Prerequisites
 
-- Node.js compatible with the project's Next.js version (Node.js 20 LTS recommended).
-- npm.
-- A MongoDB instance.
-- IBM Cloud credentials for the Watson Speech to Text and watsonx services used by the features you want to run.
-- Optional provider credentials for Cloudinary and Agora where those features are enabled.
+- Node.js
+- npm
+- Git
+- MongoDB connection
+- Required IBM Cloud and watsonx service credentials
+- Credentials for other third-party services required by the application
 
-### Setup
+### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/<your-username>/novexa-ai-meeting-platform.git
+git clone https://github.com/dhrupad1304/novexa-ai-meeting-platform.git
+```
+
+### 2. Navigate to the Project Directory
+
+```bash
 cd novexa-ai-meeting-platform
+```
+
+### 3. Install Dependencies
+
+```bash
 npm install
+```
+
+### 4. Configure Environment Variables
+
+Create a local environment configuration file:
+
+```bash
 cp .env.example .env.local
 ```
 
-Edit `.env.local` and provide your own values. Do not commit `.env.local`.
+Add your own valid service credentials and configuration values to `.env.local`.
 
-### Run locally
+Refer to `.env.example` for the required environment variable names.
+
+**Important:** Never commit `.env.local`, API keys, database credentials, access tokens, or other sensitive information to GitHub.
+
+### 5. Start the Development Server
 
 ```bash
 npm run dev
 ```
 
-The custom development server is configured by `server.js`; the default local URL is `http://localhost:3000`.
+Open the application in your browser:
 
-### Production build
-
-```bash
-npm run build
-npm start
+```text
+http://localhost:3000
 ```
 
-Some deployment targets may require adapting the custom Socket.IO server and meeting transport configuration. Review `DEPLOYMENT.md` before deploying.
+Some application features may require valid third-party service credentials and additional configuration.
 
-## Environment variables
+## 🔐 Security
 
-See [`.env.example`](.env.example) for the variable names referenced by the current source tree. At minimum, configure the database, authentication, and IBM credentials for the features you intend to test. The codebase contains both current and legacy IBM environment-variable names; do not assume every variable is required for every route.
+- Environment variables are used for service configuration.
+- `.env.example` contains placeholder values instead of actual credentials.
+- Sensitive environment files are excluded using `.gitignore`.
+- API keys and database credentials should never be hardcoded or committed to the repository.
 
-## Screenshots
+## 👨‍💻 My Contribution
 
-The uploaded source archive contained a Novexa brand image but no verified application screenshots. Add genuine screenshots captured from a running instance to `screenshots/` before publishing the repository, and update this section. Do not use mockups as evidence of implemented screens.
+Novexa was developed collaboratively by a team of five members.
 
-Suggested captures:
+My primary responsibility focused on **AI integration and IBM watsonx-related functionality**.
 
-- Dashboard / team workspace
-- Meeting room with live transcription
-- Transcript and AI-generated meeting summary
-- Agent or meeting assistant view
+My contributions included:
 
-## Security notes
+- Integrating IBM watsonx APIs into the application.
+- Working with the IBM Granite language model for AI-powered interactions.
+- Integrating IBM Watson Speech-to-Text for voice input and transcription.
+- Working on browser-based audio processing and WebSocket audio streaming.
+- Contributing to the AI voice interaction pipeline.
+- Integrating IBM Watson Text-to-Speech functionality.
 
-- Never commit `.env`, `.env.local`, credentials, service URLs containing private instance identifiers, or provider deployment notes containing secrets.
-- Rotate any credentials that were ever committed, shared in a ZIP, or exposed in chat. Deleting a file from the latest commit does not remove it from Git history.
-- Keep IBM API keys, MongoDB credentials, Cloudinary secrets, and NextAuth secrets on the server. Do not prefix secrets with `NEXT_PUBLIC_`.
-- Before making this repository public, run a secret scanner and inspect the complete Git diff.
+The project involved collaboration across AI, frontend, and backend development.
 
-## Team and attribution
+## 🏆 Recognition
 
-Novexa was developed by a five-member team. This personal portfolio repository is published with permission from the contributors. Add the names and GitHub/profile links of the other contributors here, and describe each person's contribution accurately.
+**IBM TechXchange 2025 – Top 50 Worldwide**
 
-### My contribution
+Novexa was developed and presented as part of the IBM TechXchange 2025 initiative.
 
-Update this section to reflect only the work you personally completed. Based on the project work described for this portfolio, the relevant areas to document are:
+## 🤝 Team & Acknowledgements
 
-- IBM watsonx / Granite integration for AI-powered meeting workflows.
-- Speech AI / ASR integration using IBM Watson Speech to Text.
-- Audio capture and processing flow using Web Audio API and AudioWorklet, where this was your direct implementation.
+This project was developed collaboratively by a team of five members.
 
-Do not claim ownership of teammates' frontend, backend, database, or deployment work unless you personally implemented it.
+Credit goes to all team members for their contributions across platform design, development, integration, and implementation.
 
-## Acknowledgements
+Special thanks to IBM for providing the watsonx and Watson services used in this project.
 
-- IBM Watson Speech to Text and IBM watsonx documentation / services.
-- The Novexa project teammates and mentors.
+## 📄 Additional Documentation
+
+- [System Architecture](ARCHITECTURE.md)
+- [Deployment Guide](DEPLOYMENT.md)
+- [Environment Configuration](.env.example)
+
+## 📬 Connect
+
+**GitHub:** [@dhrupad1304](https://github.com/dhrupad1304)
+
+**Project Repository:** [Novexa AI Meeting Platform](https://github.com/dhrupad1304/novexa-ai-meeting-platform)
+
+**Live Application:** [novexa-cyan.vercel.app](https://novexa-cyan.vercel.app/)
+
+---
+
+<p align="center">
+  <strong>Novexa – Making Meetings Smarter with AI.</strong>
+</p>

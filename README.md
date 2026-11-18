@@ -1,11 +1,11 @@
 # Novexa – AI-Powered Meeting Platform
 
-An AI-powered meeting and collaboration platform designed to make meetings more productive through intelligent voice processing, AI assistance, and team collaboration.
+An AI-powered meeting and collaboration platform that brings intelligent voice processing, AI assistance, and team communication together in one place.
 
 <p align="center">
-  <a href="https://novexa-cyan.vercel.app/"><strong>🚀 Visit Live Application</strong></a>
+  <a href="https://novexa-cyan.vercel.app/"><strong>🚀 Live Application</strong></a>
   &nbsp; | &nbsp;
-  <a href="https://youtu.be/zdVjuxpx4rE"><strong>▶ Watch Project Demo</strong></a>
+  <a href="https://youtu.be/zdVjuxpx4rE"><strong>▶ Watch Demo</strong></a>
   &nbsp; | &nbsp;
   <a href="https://github.com/dhrupad1304/novexa-ai-meeting-platform"><strong>GitHub Repository</strong></a>
 </p>
@@ -14,11 +14,11 @@ An AI-powered meeting and collaboration platform designed to make meetings more 
 
 ## 🌐 Live Application
 
-**Try Novexa:** https://novexa-cyan.vercel.app/
+**Explore Novexa:** https://novexa-cyan.vercel.app/
 
-## 🎥 Project Demonstration
+## 🎥 Project Demo
 
-Watch the project demonstration to understand the platform and its functionality.
+Watch the demonstration of Novexa and explore its application features.
 
 <p align="center">
   <a href="https://youtu.be/zdVjuxpx4rE">
@@ -27,63 +27,113 @@ Watch the project demonstration to understand the platform and its functionality
 </p>
 
 <p align="center">
-  <a href="https://youtu.be/zdVjuxpx4rE">Watch the Full Demo on YouTube</a>
+  <a href="https://youtu.be/zdVjuxpx4rE">Watch Full Demo on YouTube</a>
 </p>
 
 ---
 
-## 📌 Overview
+## 🖥️ Application Screenshots
 
-Novexa is an AI-powered meeting platform developed to improve how teams communicate, collaborate, and manage meetings.
+Explore the different interfaces and functionalities of the Novexa platform.
 
-The platform combines web technologies with IBM watsonx and IBM Watson Speech services to support AI-powered interactions and voice-based functionality.
+### 1. Dashboard
 
-It brings together speech recognition, AI language model integration, audio processing, and collaborative meeting experiences in a unified application.
+An overview of the platform, including meetings, teams, chats, tasks, meeting history, and AI assistance.
+
+![Novexa Dashboard](screenshots/dashboard.png)
+
+### 2. Meeting Interface
+
+The meeting interface provides options to start a new meeting, join an existing meeting, and interact through video meetings.
+
+![Novexa Meeting Interface](screenshots/meeting.png)
+
+### 3. Team Messaging
+
+An integrated company chat interface for communication and collaboration.
+
+![Novexa Team Chat](screenshots/team-chat.png)
+
+### 4. AI Agent
+
+An AI-powered conversational interface designed to support user interactions.
+
+![Novexa AI Agent](screenshots/ai-agent.png)
+
+### 5. Platform Features
+
+Additional application views showcasing task management and collaborative functionality.
+
+![Novexa Platform Features](screenshots/features.png)
+
+---
+
+## 📌 Project Overview
+
+Novexa is an AI-powered meeting and collaboration platform developed to improve how teams communicate, interact, and manage meetings.
+
+The application combines modern web technologies with IBM watsonx and IBM Watson Speech services to enable AI-powered interactions and voice-based functionality.
+
+The project brings together:
+
+- AI-powered interactions using IBM Granite.
+- Speech recognition using IBM Watson Speech-to-Text.
+- Voice response capabilities using IBM Watson Text-to-Speech.
+- Browser-based audio processing.
+- Meeting and team collaboration interfaces.
 
 Novexa was developed as a collaborative project by a team of five members and was recognized among the **Top 50 Worldwide at IBM TechXchange 2025**.
 
 ## ✨ Key Features
 
-- **AI-Powered Meeting Assistance:** Integrates IBM watsonx and Granite LLM capabilities for intelligent AI interactions.
-- **Speech-to-Text:** Uses IBM Watson Speech-to-Text to convert voice input into text.
-- **Text-to-Speech:** Integrates IBM Watson Text-to-Speech for voice-based responses.
+- **AI-Powered Assistance:** Integration with IBM watsonx and Granite language models.
+- **Speech-to-Text:** Converts voice input into text using IBM Watson Speech-to-Text.
+- **Text-to-Speech:** Supports voice responses through IBM Watson Text-to-Speech.
 - **Audio Processing:** Captures and processes microphone input through browser audio APIs.
-- **Real-Time Audio Streaming:** Uses WebSocket-based communication for speech processing.
-- **AI Integration:** Connects application workflows with IBM AI services through API integrations.
-- **Collaborative Experience:** Provides a platform for meeting-related interactions and team collaboration.
+- **Audio Streaming:** Uses WebSocket communication for speech-processing integration.
+- **Team Collaboration:** Provides meeting and team communication interfaces.
+- **Meeting Management:** Supports meeting-related interactions through the application.
+- **Task Management:** Includes task-related functionality in the platform.
 
 ## 🏗️ System Architecture
 
-The application connects its frontend, API routes, audio-processing components, and IBM AI services.
+The following diagram illustrates the high-level integration of the frontend, audio-processing components, backend APIs, and IBM AI services.
 
 ```mermaid
 flowchart TD
-    A[User / Meeting Participant] --> B[Next.js Frontend]
+    A[User] --> B[Next.js Frontend]
+
     B --> C[Meeting Interface]
-    B --> D[Audio Capture]
-    D --> E[Audio Processing]
-    E --> F[IBM Watson Speech-to-Text]
-    F --> G[Transcribed Text]
-    G --> H[IBM watsonx API]
-    H --> I[Granite LLM]
-    I --> J[AI Response]
-    J --> B
-    B --> K[Backend API Routes]
-    K --> L[Application Services]
-    L --> M[(MongoDB)]
-    B --> N[IBM Watson Text-to-Speech]
+    B --> D[Team Collaboration]
+    B --> E[AI Agent]
+
+    C --> F[Audio Capture]
+    F --> G[Audio Processing]
+    G --> H[IBM Watson Speech-to-Text]
+
+    H --> I[Transcribed Text]
+    I --> J[IBM watsonx API]
+    J --> K[Granite LLM]
+    K --> L[AI Response]
+
+    L --> B
+    B --> M[Backend API Routes]
+    M --> N[Application Services]
+    N --> O[(MongoDB)]
+
+    B --> P[IBM Watson Text-to-Speech]
 ```
 
 ## 🧠 AI and Voice Processing Pipeline
 
-The AI and voice integration consists of the following stages:
+The AI and voice integration involves the following stages:
 
 1. **Audio Capture:** Captures microphone input using browser audio APIs.
 2. **Audio Processing:** Uses an AudioWorklet to process audio samples and convert floating-point audio data into 16-bit PCM format.
 3. **Speech Recognition:** Streams audio to IBM Watson Speech-to-Text through a WebSocket connection.
 4. **Transcription:** Receives recognized speech and makes the transcribed text available to the application.
 5. **AI Inference:** Integrates with IBM watsonx to generate AI responses using the Granite language model.
-6. **Voice Response:** Uses IBM Watson Text-to-Speech to convert text responses into audio.
+6. **Voice Response:** Integrates IBM Watson Text-to-Speech to convert text responses into audio.
 
 ## 🛠️ Technology Stack
 
@@ -120,6 +170,11 @@ novexa-ai-meeting-platform/
 │       └── watsonx.js
 │
 ├── screenshots/
+│   ├── dashboard.png
+│   ├── meeting.png
+│   ├── team-chat.png
+│   ├── ai-agent.png
+│   └── features.png
 │
 ├── ARCHITECTURE.md
 ├── DEPLOYMENT.md
@@ -129,7 +184,7 @@ novexa-ai-meeting-platform/
 └── README.md
 ```
 
-*Note: This is a simplified representation showing selected project files and directories.*
+*Note: This is a simplified representation of selected project files and directories.*
 
 ## ⚙️ Getting Started
 
@@ -142,7 +197,7 @@ Follow these instructions to run the project locally.
 - Git
 - MongoDB connection
 - Required IBM Cloud and watsonx service credentials
-- Credentials for other third-party services required by the application
+- Credentials for other third-party services used by the application
 
 ### 1. Clone the Repository
 
@@ -174,7 +229,7 @@ Add your own valid service credentials and configuration values to `.env.local`.
 
 Refer to `.env.example` for the required environment variable names.
 
-**Important:** Never commit `.env.local`, API keys, database credentials, access tokens, or other sensitive information to GitHub.
+**Security note:** Never commit `.env.local`, API keys, database credentials, access tokens, or other sensitive information to GitHub.
 
 ### 5. Start the Development Server
 
@@ -188,13 +243,13 @@ Open the application in your browser:
 http://localhost:3000
 ```
 
-Some application features may require valid third-party service credentials and additional configuration.
+Some features may require valid third-party service credentials and additional configuration.
 
 ## 🔐 Security
 
 - Environment variables are used for service configuration.
-- `.env.example` contains placeholder values instead of actual credentials.
-- Sensitive environment files are excluded using `.gitignore`.
+- `.env.example` contains placeholder values rather than actual credentials.
+- Sensitive environment files are excluded through `.gitignore`.
 - API keys and database credentials should never be hardcoded or committed to the repository.
 
 ## 👨‍💻 My Contribution
@@ -228,7 +283,7 @@ Credit goes to all team members for their contributions across platform design, 
 
 Special thanks to IBM for providing the watsonx and Watson services used in this project.
 
-## 📄 Additional Documentation
+## 📚 Additional Documentation
 
 - [System Architecture](ARCHITECTURE.md)
 - [Deployment Guide](DEPLOYMENT.md)
